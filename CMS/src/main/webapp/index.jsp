@@ -7,6 +7,7 @@
     <title>Document</title>
 
     <link rel="stylesheet" href="css/Login.css">
+<%--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">--%>
 </head>
 
 
@@ -21,9 +22,22 @@
                 <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a> -->
             </div>
             <!-- <span>or use your email for registration</span> -->
-            <input name="cName" class="form-input" type="text" placeholder="Name" />
-            <input name="cEmail" class="form-input" type="email" placeholder="Email" />
-            <input name="cPassword" class="form-input" type="password" placeholder="Password" />
+            <input name="cName" class="form-input" type="text" placeholder="Name"  required />
+            <input name="cEmail" class="form-input" type="email" placeholder="Email"  required />
+            <input name="cPassword" class="form-input" type="password" placeholder="Password"  required />
+
+            <div class="job-roll">
+                <div>
+                    <label class="form-check-label" for="radioDefault1">Admin</label>
+                    <input class="form-check-input" type="radio" name="roll" id="radioDefault1" value="Admin">
+
+                </div>
+                <div>
+                    <label class="form-check-label" for="radioDefault2">User</label>
+                    <input class="form-check-input" type="radio" name="roll" id="radioDefault2" value="User" checked>
+                </div>
+            </div>
+
             <button type="submit">Sign Up</button>
         </form>
     </div>
@@ -36,8 +50,8 @@
                 <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a> -->
             </div>
             <!-- <span>or use your account</span> -->
-            <input name="email" class="form-input" type="email" placeholder="Email" />
-            <input name="password" class="form-input" type="password" placeholder="Password" />
+            <input name="email" class="form-input" type="email" placeholder="Email"  required/>
+            <input name="password" class="form-input" type="password" placeholder="Password"  required />
             <!-- <a href="#">Forgot your password?</a> -->
             <button type="submit">Sign In</button>
         </form>
@@ -59,7 +73,7 @@
 </div>
 
 
-
+<%--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>--%>
 <script src="js/Login.js"></script>
 
 

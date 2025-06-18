@@ -47,9 +47,31 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
 
-        System.out.println(email + " " + password);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setU_email( req.getParameter("email"));
+        userDTO.setU_password( req.getParameter("password"));
+        userDTO.setBasicDataSource(basicDataSource = (BasicDataSource) getServletContext().getAttribute("dataSource"));
+
+
+        try {
+            UserModel userModel = new UserModel();
+            String jobRoll = userModel.findUser(userDTO);
+
+            if (!jobRoll.equals("Cannot find user")) {
+                if (jobRoll.equals("Admin")) {
+                    System.out.println("admin");
+                } else {
+                    System.out.println("user");
+                }
+            }else {
+                System.out.println("Wrong email or password");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 }

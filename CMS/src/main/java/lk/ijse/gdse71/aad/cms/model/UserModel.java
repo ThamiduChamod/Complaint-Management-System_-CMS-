@@ -5,6 +5,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserModel {
@@ -21,10 +22,27 @@ public class UserModel {
         int isSave = preparedStatement.executeUpdate();
 
         if (isSave > 0) {
+            connection.close();
             return true;
         }else {
+            connection.close();
             return false;
         }
+    }
+
+    public String findUser(UserDTO user) throws SQLException {
+        Connection connection =user.getBasicDataSource().getConnection();
+
+        PreparedStatement pst = connection.prepareStatement("select u_jobRoll from user where u_email=? and u_password=?");
+        pst.setString(1, user.getU_email());
+        pst.setString(2, user.getU_password());
+        ResultSet rs = pst.executeQuery();
+
+        if (rs.next()) {
+            return rs.getString("u_jobRoll");
+        }
+        return "Cannot find user";
+
     }
 
 }

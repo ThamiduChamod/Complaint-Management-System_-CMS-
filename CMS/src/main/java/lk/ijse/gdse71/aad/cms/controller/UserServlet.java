@@ -61,8 +61,10 @@ public class UserServlet extends HttpServlet {
             if (!jobRoll.equals("Cannot find user")) {
                 if (jobRoll.equals("Admin")) {
                     System.out.println("admin");
+                    req.getRequestDispatcher("/AdminPage.jsp").forward(req, resp);
                 } else {
                     System.out.println("user");
+                    req.getRequestDispatcher("/UserPage.jsp").forward(req, resp);
                 }
             }else {
                 System.out.println("Wrong email or password");

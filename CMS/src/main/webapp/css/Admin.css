@@ -1,0 +1,99 @@
+body {
+    background-color: #f5f7fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+/* Sidebar styling */
+.sidebar-item {
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    background-color: #ffffff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: 600;
+    color: #333;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+    user-select: none;
+}
+
+.sidebar-item:hover,
+.sidebar-item.active {
+    background-color: #6610f2;
+    color: white;
+    box-shadow: 0 4px 12px rgb(102 16 242 / 0.4);
+}
+
+/* Content sections */
+.content-section {
+    display: none;
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 0.1);
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+.content-section.active {
+    display: block;
+}
+
+/* Header */
+.header {
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e1e1e1;
+    margin-bottom: 25px;
+}
+
+.logout-btn {
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+    .sidebar-item {
+        text-align: center;
+    }
+}
+
+.dashboard-header {
+    background: #11998e;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #38ef7d, #11998e);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #38ef7d, #11998e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    color: #fff;
+    border-radius: 12px;
+    padding: 20px 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.dashboard-header h3 {
+    font-weight: 600;
+    margin: 0;
+    font-size: 1.6rem;
+}
+
+.logout-btn {
+    background-color: #dc3545;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: 0.3s ease-in-out;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+.logout-icon {
+    margin-right: 6px;
+}

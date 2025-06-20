@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lk.ijse.gdse71.aad.cms.dto.UserDTO;
 import lk.ijse.gdse71.aad.cms.model.UserModel;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -61,10 +62,26 @@ public class UserServlet extends HttpServlet {
             if (!jobRoll.equals("Cannot find user")) {
                 if (jobRoll.equals("Admin")) {
                     System.out.println("admin");
-                    req.getRequestDispatcher("/AdminPage.jsp").forward(req, resp);
+
+                    HttpSession session = req.getSession();
+                    String email =req.getParameter("email");
+                    System.out.println(email);
+                    session.setAttribute("userEmail",email );
+
+                    resp.sendRedirect("AdminServlet");
+
+
                 } else {
                     System.out.println("user");
-                    req.getRequestDispatcher("/UserPage.jsp").forward(req, resp);
+
+//                    req.getRequestDispatcher("/UserPage.jsp").forward(req, resp);
+
+                    HttpSession session = req.getSession();
+                    String email =req.getParameter("email");
+                    System.out.println(email);
+                    session.setAttribute("userEmail",email );
+
+                    resp.sendRedirect("UserPageServlet");
                 }
             }else {
                 System.out.println("Wrong email or password");

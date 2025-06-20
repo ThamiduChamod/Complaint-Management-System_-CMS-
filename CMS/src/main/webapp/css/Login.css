@@ -135,15 +135,16 @@ input {
 
 .job-roll{
     display: flex;
-    justify-content: right;
-    background-color: #eee;
-    border: none;
+    justify-content: left;
+    /*background-color: #eee;*/
+    border-radius: 20px;
     padding: 12px 15px;
     margin: 8px 0;
     width: 100%;
 }
 .job-roll>div{
     display: flex;
+    align-items: center;
 }
 
 .container.right-panel-active .sign-up-container {

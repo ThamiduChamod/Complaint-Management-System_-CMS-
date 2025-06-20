@@ -1,6 +1,7 @@
 package lk.ijse.gdse71.aad.cms.controller;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,90 +15,91 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 
-public class AdminServlet extends HttpServlet {
+//@WebServlet("/UserPageServlet")
+public class UserPageServlet extends HttpServlet {
     BasicDataSource basicDataSource;
+
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         basicDataSource = (BasicDataSource) getServletContext().getAttribute("dataSource");
-
         HttpSession session = req.getSession(false);
+
         if (session == null || session.getAttribute("userEmail") == null) {
             resp.sendRedirect("index.jsp"); // not logged in
             return;
         }
-        String user_email = (String) session.getAttribute("userEmail");
-        System.out.println(user_email);
+         String user_email = (String) session.getAttribute("userEmail");
+
 
         ComplainModel complainModel = new ComplainModel();
         try {
-            List<ComplainDTO> getAll = complainModel.getAll(basicDataSource);
-            req.setAttribute("AllComplain", getAll);
-
-            List<ComplainDTO> resolved = complainModel.getAllComplainByStatus("RESOLVED", basicDataSource);
+            System.out.println("model eka call una");
+            List<ComplainDTO> resolved = complainModel.getAllComplainByStatusANDUserMail("RESOLVED",user_email, basicDataSource);
             req.setAttribute("totalResolved", resolved.size());
             req.setAttribute("resolvedList", resolved);
 
 
-            List<ComplainDTO> inProgress = complainModel.getAllComplainByStatus("PROGRESS", basicDataSource);
+            List<ComplainDTO> inProgress = complainModel.getAllComplainByStatusANDUserMail("PROGRESS",user_email, basicDataSource);
             req.setAttribute("totalInProgress", inProgress.size());
             req.setAttribute("InProgress", inProgress);
 
 
-            List<ComplainDTO> pending = complainModel.getAllComplainByStatus("PENDING", basicDataSource);
+            List<ComplainDTO> pending = complainModel.getAllComplainByStatusANDUserMail("PENDING",user_email, basicDataSource);
             req.setAttribute("totalPending", pending.size());
             req.setAttribute("Pending", pending);
 
-            req.getRequestDispatcher("AdminPage.jsp").forward(req, resp);
+            req.getRequestDispatcher("UserPage.jsp").forward(req, resp);
+//            resp.sendRedirect("UserPage.jsp");
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
 
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        basicDataSource = (BasicDataSource) getServletContext().getAttribute("dataSource");
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Format: 2025-06-20
         String formattedDate = today.format(formatter);
 
+        HttpSession session = req.getSession(false);
+        if (session == null || session.getAttribute("userEmail") == null) {
+            resp.sendRedirect("index.jsp");
+            return;
+        }
+        String user_email = (String) session.getAttribute("userEmail");
 
-        String id = req.getParameter("id");
-        String user_email = req.getParameter("email");
+
         String complain = req.getParameter("complain");
-        String complaint_date = req.getParameter("complaint_date");
-        String answer = req.getParameter("answer");
-       String date = formattedDate;
-        String status = req.getParameter("status");
+
+        basicDataSource = (BasicDataSource) getServletContext().getAttribute("dataSource");
 
         ComplainDTO complainDTO = new ComplainDTO(
-                id,
+                UUID.randomUUID().toString(),
                 user_email,
                 complain,
-                complaint_date,
-                answer,
-                date,
-                status
-        );
+                formattedDate,
+                "",
+                null,
+                "PENDING"
 
-        ComplainModel cm = new ComplainModel();
+        );
+        ComplainModel complainModel = new ComplainModel();
         try {
-            boolean isSave = cm.updateAnswer(complainDTO, basicDataSource);
+            boolean isSave = complainModel.addComplain(complainDTO, basicDataSource);
             if (isSave) {
                 System.out.println("save una");
-                resp.sendRedirect("AdminServlet");
-
-            }else {
-                System.out.println("na");
-                resp.sendRedirect("AdminServlet");
-
+                resp.sendRedirect("UserPageServlet");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
 
     }
 }

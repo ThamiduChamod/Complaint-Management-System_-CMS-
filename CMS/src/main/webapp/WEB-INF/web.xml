@@ -3,4 +3,24 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
+    <servlet>
+        <servlet-name>UserPageServlet</servlet-name>
+        <servlet-class>lk.ijse.gdse71.aad.cms.controller.UserPageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserPageServlet</servlet-name>
+        <url-pattern>/UserPageServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>lk.ijse.gdse71.aad.cms.controller.AdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/AdminServlet</url-pattern>
+    </servlet-mapping>
+
+
+
 </web-app>
